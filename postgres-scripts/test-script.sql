@@ -1,0 +1,1 @@
+Select 'hello sql' as greeting

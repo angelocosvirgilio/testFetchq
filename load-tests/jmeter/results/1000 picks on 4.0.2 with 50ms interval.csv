@@ -1,0 +1,6 @@
+Label,# Samples,Average,Median,90% Line,95% Line,99% Line,Min,Max,Error %,Throughput,Received KB/sec,Sent KB/sec
+doc_append,1000,2,2,3,4,15,1,103,0.000%,388.19876,17.06,0.00
+doc_pick,1001,5,3,9,19,34,2,69,0.000%,15.46902,3.45,0.00
+TOTAL,2001,3,3,5,12,29,1,103,0.000%,29.73784,3.97,0.00
+
+maxCPU,6%,maxMem,24MB,limits,1CPU,1GBram

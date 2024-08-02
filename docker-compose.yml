@@ -1,0 +1,96 @@
+version: "3.8"
+services:
+  ###
+  ### DOMAIN SERVICES
+  ###
+  
+  pgsqldb:
+    image: postgres
+    hostname: pgsqldb
+    ports:
+      - "5432:5432"
+    volumes:
+      - .docker-data/hasura-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 1GB
+        reservations:
+          cpus: 1
+          memory: 1GB
+
+  jmeter:
+    build:
+      context: .
+      dockerfile: Dockerfile-jmeter
+    container_name: jmeter
+    #restart: "always"
+    #command: ls -l /jmeter/testplans
+    # command: sleep 1d
+    environment:
+      testPlanName: "${testPlanName:-test_doc_append_doc_pick}"
+      version: "${version:-4.0.2}"
+      testPlanNameFile: "${testPlanNameFile:-test_doc_append_doc_pick}"
+      appendDocEnabled: "${appendDocEnabled:-1}"
+      pickDocEnabled: "${pickDocEnabled:-1}"
+      rowsNumber: "${rowsNumber:-1000}"
+      jsonFilePath: "${jsonFilePath:-/jmeter/testplans/large_data.json}"
+      postgres_name: "${postgres_name:-testfetchq_pgsqldb_1}"
+    volumes:
+      - ./load-tests/jmeter/:/jmeter/      
+      - ./load-tests-results/:/load-test-results/     
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 1GB
+        reservations:
+          cpus: 1
+          memory: 1GB
+  
+  ## MONITORING
+  
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - cadvisor
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+networks:
+  default:
+    name: testpgfetchq
+    # external: true

@@ -1,0 +1,1 @@
+SELECT * FROM fetchq.queue_create('q1');

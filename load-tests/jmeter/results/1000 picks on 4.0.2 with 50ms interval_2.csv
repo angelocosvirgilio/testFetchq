@@ -1,0 +1,4 @@
+Label,# Samples,Average,Median,90% Line,95% Line,99% Line,Min,Max,Error %,Throughput,Received KB/sec,Sent KB/sec
+doc_append,1000,1,2,3,3,8,1,87,0.000%,472.36656,20.76,0.00
+doc_pick,1001,6,5,11,13,27,2,206,0.000%,15.53672,3.47,0.00
+TOTAL,2001,4,3,9,11,21,1,206,0.000%,30.06897,4.02,0.00

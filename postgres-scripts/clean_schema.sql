@@ -1,0 +1,2 @@
+DROP SCHEMA IF EXISTS fetchq_data;
+DROP SCHEMA IF EXISTS fetchq;
