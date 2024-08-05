@@ -1,6 +1,6 @@
 # Performance and Resource Utilization Testing for Fetchq on PostgreSQL
 
-This repository contains tools and scripts to test the performance and resource utilization of the PostgreSQL database with the Fetchq extension installed. The setup is largely containerized, with `docker-compose` commands managed partially via a `Makefile`.
+This repository contains tools and scripts to test the performance and resource utilization of the PostgreSQL database with the [Fetchq](https://github.com/fetchq/pg-extension#fetchq-postgres-extension) extension installed. The setup is largely containerized, with `docker-compose` commands managed partially via a `Makefile`.
 
 ## Table of Contents
 
