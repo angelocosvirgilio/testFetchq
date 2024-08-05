@@ -11,7 +11,7 @@
 | **Range of Memory Usage**| 250 MiB - 452 MiB       |
 | **Range of Memory Usage %**| 24.41% - 44.14%       |
 
-### Version 4.0.1
+### Version 4.0.0
 
 | Metric                  | Value                   |
 |-------------------------|-------------------------|
